@@ -39,4 +39,25 @@ $ git init
 $ git commit -am 'initial commit'
 ```
 
+Create a User model:
 
+```bash
+$ rails generate model User
+```
+
+Edit the migration file. We need a minimum of two fields to 'authenticate' a user, meaning we not only recognize a user, we can verify that they are who they say they are. The typical way of doing this is to accept an email and password.
+
+Instead of storing a plain-text password, we'll keep them in the database in an encrypted format. The database column will be called `encrypted_password`:
+
+```ruby
+class CreateUsers < ActiveRecord::Migration
+  def change
+    create_table :users do |t|
+      t.string :email
+      t.string :encrypted_password
+
+      t.timestamps null: false
+    end
+  end
+end
+```
